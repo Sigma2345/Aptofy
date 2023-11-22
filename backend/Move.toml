@@ -1,0 +1,15 @@
+[package]
+name = 'On-Chain-Radio'
+version = '1.0.0'
+authors = []
+
+[addresses]
+aptos_framework = "0x1"
+onchainradio = "0xcddc032ac288eae140f6e9e033cb2dc5801715fbcf69ca2eda4cbf6a7bd01320"
+
+[dev-addresses]
+[dependencies]
+MoveStdlib = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/move-stdlib", rev = "main" }
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/aptos-framework", rev = "main" }
+
+[dev-dependencies]

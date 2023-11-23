@@ -12,7 +12,7 @@ module onchainradio::songs {
     // CONSTANTS
     // change address afterwards
     // to change for governance
-    const ADMIN: address = 0x01234 ;
+    const ADMIN: address = 0x1234 ;
 
     // struct Creator
     struct Creator has key, store {
@@ -38,6 +38,12 @@ module onchainradio::songs {
         assert!(exists<Creator>(creator_address), ERROR_USER_NOT_CREATOR);
         let song = Song { creator: creator_address, title: _title, URI: _uri, description: _description } ;
         move_to(_creator, song);
+        events::emit_song_published(
+            creator_address,
+            _title,
+            _uri,
+            timestamp::now_seconds()
+        );
     }
 
     public entry fun AddCreator(
@@ -58,4 +64,8 @@ module onchainradio::songs {
         account == ADMIN
     }
 
+    #[view]
+    public fun isCreator(account: address): bool {
+        exists<Creator>(account)
+    }
 }

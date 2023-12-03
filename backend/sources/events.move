@@ -4,6 +4,11 @@ module onchainradio::events {
 
     friend onchainradio::songs ;
 
+    #[event] 
+    struct ContractPublished has drop, store {
+        admin_address: address
+    }
+
     #[event]
     struct CreatorAdded has drop, store {
         creator_address: address,
@@ -16,6 +21,14 @@ module onchainradio::events {
         title: vector<u8>,
         uri: vector<u8>,
         timestamp: u64
+    }
+
+    public(friend) fun emit_contract_published(
+        _admin_address: address
+    ) {
+        event::emit(ContractPublished {
+            admin_address: _admin_address
+        });
     }
 
     public(friend) fun emit_creator_added(

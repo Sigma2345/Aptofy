@@ -5,7 +5,7 @@ authors = []
 
 [addresses]
 aptos_framework = "0x1"
-onchainradio = "0xcddc032ac288eae140f6e9e033cb2dc5801715fbcf69ca2eda4cbf6a7bd01320"
+onchainradio = "_"      
 
 [dev-addresses]
 [dependencies]

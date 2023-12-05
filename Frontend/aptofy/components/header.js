@@ -21,7 +21,7 @@ const drawerWidth = 250;
 const navItems = [
     {
         label: "Dashboard",
-        url: "/dashboard",
+        url: "/",
     },
 ];
 
@@ -51,7 +51,7 @@ export default function DrawerAppBar(props) {
     };
 
     const drawer = (
-        <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+        <Box onClick={handleDrawerToggle} sx={{ textAlign: "center", marginBottom: "0px" }}>
             <span className="w-full flex justify-center p-3">
                 <RadioIcon fontSize="large" />
             </span>
@@ -77,7 +77,7 @@ export default function DrawerAppBar(props) {
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: "none" } }}
+                        sx={{ mr: 3, display: { sm: "none" } }}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -86,11 +86,11 @@ export default function DrawerAppBar(props) {
                         className="cursor-pointer"
                         variant="h6"
                         component="div"
-                        sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}
+                        sx={{ flexGrow: { xs: 1, md: 0 }, display: "flex", alignItems: "center" }}
                     >
                         <RadioIcon />
                     </Typography>
-                    <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "flex-end", mr: 3 }}>
                         {navItems.map((item) => (
                             <Button onClick={() => router.push(item.url)} key={item.label} sx={{ color: "#fff" }}>
                                 {item.label}
@@ -122,14 +122,14 @@ export default function DrawerAppBar(props) {
                         keepMounted: true, // Better open performance on mobile.
                     }}
                     sx={{
-                        display: { xs: "block", sm: "none" },
+                        display: { xs: "block", md: "none" },
                         "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
                     }}
                 >
                     {drawer}
                 </Drawer>
             </nav>
-            <Box component="main" sx={{ p: 3 }}>
+            <Box component="main">
                 <Toolbar />
             </Box>
         </Box>

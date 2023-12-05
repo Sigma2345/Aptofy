@@ -14,11 +14,11 @@ export default function Home() {
     };
     useEffect(() => {
         fetchSongs();
-    });
+    }, []);
     return (
         <div>
             {songList.map((song) => (
-                <MusicCard title={song.title} artist={song.artist} />
+                <MusicCard key={song.title} title={song.title} artist={song.artist} />
             ))}
         </div>
     );

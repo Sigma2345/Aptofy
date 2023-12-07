@@ -1,5 +1,4 @@
 import { React, useState } from "react";
-import Header from "../components/RegisterHeader";
 import Footer from "../components/Footer";
 import SongRequestCard from "../components/songRequestCard";
 import axios from "axios";
@@ -54,7 +53,6 @@ export const Offers = () => {
 
     return (
         <div class="flex flex-col min-h-screen">
-            <Header />
 
             <div class="flex flex-1 ">
                 <div class="bg-[#A0BFE0] h-screen p-4 w-1/6">

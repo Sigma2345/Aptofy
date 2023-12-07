@@ -16,7 +16,9 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.20",
+    "mime": "^4.0.0",
     "next": "13.0.0",
+    "nft.storage": "^7.1.1",
     "petra-plugin-wallet-adapter": "^0.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"

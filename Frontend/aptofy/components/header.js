@@ -13,6 +13,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import RadioIcon from "@mui/icons-material/Radio";
+import Tooltip from "@mui/material/Tooltip";
 import { useRouter } from "next/router";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
@@ -98,16 +99,20 @@ export default function DrawerAppBar(props) {
                         ))}
                     </Box>
                     <Box>
-                        {connected ? (
+                        {!connected ? (
                             <Button sx={{ color: "#fff" }} onClick={() => onConnect(wallets[0])}>
                                 <CloudOffIcon />
                                 <span className="ml-2">Connect</span>
                             </Button>
                         ) : (
-                            <Button sx={{ color: "#fff" }} onClick={() => disconnect()}>
-                                <CloudIcon />
-                                <span className="ml-2">Disconnect</span>
-                            </Button>
+                            <Tooltip title={account.address}>
+                                <Button sx={{ color: "#fff" }} onClick={() => disconnect()}>
+                                    <CloudIcon />
+                                    <span className="ml-2 w-24 overflow-hidden text-ellipsis whitespace-nowrap">
+                                        {account.address}
+                                    </span>
+                                </Button>
+                            </Tooltip>
                         )}
                     </Box>
                 </Toolbar>

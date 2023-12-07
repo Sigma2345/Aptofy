@@ -1,16 +1,24 @@
 import { React, useState } from "react";
 import Footer from "../components/Footer";
+import Button from "@mui/material/Button";
+import generateNFT from "../common/handleIPFS";
+//import uploadToChain from "../common/uploadToChain";
+import { AptosClient } from 'aptos'
+import { useWallet } from '@aptos-labs/wallet-adapter-react'
 
 export const songUpload = () => {
     const [fileList, setFiles] = useState([]);
     const [title, setTitle] = useState("");
-    const [artist, setArtist] = useState("");
+    const [description, setDescription] = useState("");
     const [genre, setGenre] = useState("");
+
+    const { signAndSubmitTransaction } = useWallet()
+    
 
     const handleFileChange = (event) => {
         const selectedFiles = event.target.files;
         const fileList = Array.from(selectedFiles);
-
+        console.log(fileList);
         setFiles(fileList);
     };
 
@@ -18,12 +26,34 @@ export const songUpload = () => {
         setTitle(event.target.value);
     };
 
-    const handleArtistChange = (event) => {
-        setArtist(event.target.value);
+    const handleDescriptionChange = (event) => {
+        setDescription(event.target.value);
     };
 
     const handleGenreChange = (event) => {
         setGenre(event.target.value);
+    };
+
+    const uploadToChain = async (title, uri, description) => {
+        if (process.browser){
+                const response = await signAndSubmitTransaction(
+                {
+                    type: 'entry_function_payload',
+                    function: "6b813bbe7f84ab59540e810cca6ed884e9358c05d1b0c45b1ea5f4d3170ea219::songs::publish_song",
+                    type_arguments: [],
+                    arguments: [title, uri, description],
+                }
+            );
+            return await AptosClient.waitForTransaction(response?.hash);
+        }
+    }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const data = await generateNFT(fileList[0], title, genre, description);
+        console.log(data);
+        const ret = await uploadToChain(title, data, description);
+        console.log(ret);
     };
 
     return (
@@ -48,15 +78,15 @@ export const songUpload = () => {
                         </div>
 
                         <div className="mb-1">
-                            <label htmlFor="artist" className="block text-sm font-medium text-gray-700">
-                                Artist
+                            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                                Description
                             </label>
                             <input
                                 type="text"
-                                id="artist"
+                                id="Description"
                                 className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                                value={artist}
-                                onChange={handleArtistChange}
+                                value={description}
+                                onChange={handleDescriptionChange}
                             />
                         </div>
 
@@ -104,8 +134,7 @@ export const songUpload = () => {
                                                 id="dropzone-file"
                                                 type="file"
                                                 className="hidden"
-                                                onChange={handleFileChange}
-                                                multiple
+                                                onChange={handleFileChange}                                                
                                                 accept="audio/*" // Add audio file acceptance
                                             />
                                         </div>
@@ -149,7 +178,7 @@ export const songUpload = () => {
                                                 </svg>
                                                 Maximum audio size is 10MB
                                             </li>
-                                            <li class="flex items-center">
+                                            {/* <li class="flex items-center">
                                                 <svg
                                                     class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400"
                                                     aria-hidden="true"
@@ -164,13 +193,16 @@ export const songUpload = () => {
                                                     />
                                                 </svg>
                                                 Batch uploads are limited to 100MB
-                                            </li>
+                                            </li> */}
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </form>
+                    <Button variant="contained" sx={{m:'10px', backgroundColor: '#006983'}} onClick={handleSubmit}>
+                        Submit
+                    </Button>
                 </div>
 
                 <div

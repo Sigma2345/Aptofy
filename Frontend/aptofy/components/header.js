@@ -24,6 +24,10 @@ const navItems = [
         label: "Dashboard",
         url: "/",
     },
+    {
+        label: "Upload",
+        url: "/songUpload",
+    },
 ];
 
 export default function DrawerAppBar(props) {

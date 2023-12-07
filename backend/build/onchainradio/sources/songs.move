@@ -131,6 +131,6 @@ module onchainradio::songs{
     public fun isCreator(account: address): bool {
         exists<Creator>(account)
     }
-    
+
 }
 

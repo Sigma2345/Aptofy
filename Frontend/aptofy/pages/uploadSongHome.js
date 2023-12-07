@@ -4,7 +4,6 @@ import Footer from "../components/Footer";
 export const RegisterPlace = () => {
     return (
         <div class="flex flex-col min-h-screen">
-        
             <div class="py-8 text-center">
                 <div class="text-center">
                     <h1 class="font-semibold animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-5xl">

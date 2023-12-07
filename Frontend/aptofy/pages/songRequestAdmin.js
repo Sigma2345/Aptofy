@@ -53,7 +53,6 @@ export const Offers = () => {
 
     return (
         <div class="flex flex-col min-h-screen">
-
             <div class="flex flex-1 ">
                 <div class="bg-[#A0BFE0] h-screen p-4 w-1/6">
                     <div class="max-w-xs">

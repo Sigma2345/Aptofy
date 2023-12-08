@@ -39,7 +39,7 @@ export const songUpload = () => {
                 const response = await signAndSubmitTransaction(
                 {
                     type: 'entry_function_payload',
-                    function: "6b813bbe7f84ab59540e810cca6ed884e9358c05d1b0c45b1ea5f4d3170ea219::songs::publish_song",
+                    function: 6b813bbe7f84ab59540e810cca6ed884e9358c05d1b0c45b1ea5f4d3170ea219::songs::publish_song,
                     type_arguments: [],
                     arguments: [title, uri, description],
                 }

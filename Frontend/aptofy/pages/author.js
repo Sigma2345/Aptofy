@@ -40,7 +40,7 @@ const AuthorPage = ({ className = "" }) => {
                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                             />
                         </svg>
-                        <span className="text-neutral-6000 dark:text-neutral-300">{userData.location}</span>
+                        <span className="text-neutral-6000 dark:text-neutral-300">{userData.starRating}</span>
                     </div>
                     <div className="flex items-center space-x-4">
                         <svg
@@ -115,8 +115,13 @@ const AuthorPage = ({ className = "" }) => {
                                         .filter((_, i) => i < 4)
                                         .map(
                                             //edit and handle data here
-                                            (stay) => (
-                                                <SongDisplayCard key={stay.id} data={stay} />
+                                            (user) => (
+                                                <SongDisplayCard
+                                                    title={user.title}
+                                                    imageSrc={user.imageSrc}
+                                                    starRating={user.starRating}
+                                                    genre={user.genre}
+                                                />
                                             ),
                                         )}
                                 </div>

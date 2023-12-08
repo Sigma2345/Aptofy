@@ -5,7 +5,7 @@ const SongDisplayCard = ({ title, imageSrc, starRating, genres }) => {
         <div class="bg-white rounded-lg shadow-md p-4 mb-4">
             <div class="flex">
                 <div class="flex-shrink-0 w-1/4">
-                    <img src={imageSrc} alt="Hotel" class="w-full h-auto rounded-md" />
+                    <img src={imageSrc} alt="song" class="w-full h-auto rounded-md" />
                 </div>
 
                 <div class="ml-4 flex-grow">
@@ -17,7 +17,7 @@ const SongDisplayCard = ({ title, imageSrc, starRating, genres }) => {
                     <div class="mt-4">
                         <h3 class="text-lg font-semibold mb-2">Genre:</h3>
                         <div class="flex space-x-2 overflow-x-auto">
-                            {genres.map((genre, index) => (
+                            {genres?.map((genre, index) => (
                                 <div key={index} class="px-2 py-1 bg-gray-200 rounded-md">
                                     {genre}
                                 </div>

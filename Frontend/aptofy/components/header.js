@@ -28,6 +28,18 @@ const navItems = [
         label: "Upload",
         url: "/songUpload",
     },
+    {
+        label: "songRequestAdmin",
+        url: "/songRequestAdmin",
+    },
+    {
+        label: "404",
+        url: "/noPage",
+    },
+    {
+        label: "UploadSongHome",
+        url: "/uploadSongHome",
+    },
 ];
 
 export default function DrawerAppBar(props) {

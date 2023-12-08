@@ -3,30 +3,15 @@ import Footer from "../components/Footer";
 import SongRequestCard from "../components/songRequestCard";
 import axios from "axios";
 
-export const Offers = () => {
+export const songRequestAdmin = () => {
     const [formData, setFormData] = useState({
-        filter: "",
-        starRating: [],
-        genres: [],
+        imageSrc: "",
+        description: "",
+        genres: {},
     });
 
     function filter() {
-        axios
-            .post("http://localhost:3030/", {
-                filter: formData.filter,
-                starRating: formData.starRating,
-                genres: formData.genres,
-            })
-            .then((resp) => {
-                if (resp.data.success) {
-                    console.log(resp.data);
-                } else {
-                    alert(resp.data.message);
-                }
-            })
-            .catch((e) => {
-                alert(e);
-            });
+        //add filter logic
     }
 
     const handleRadioChange = (e) => {
@@ -67,7 +52,7 @@ export const Offers = () => {
                                         class="mr-2"
                                         onChange={handleRadioChange}
                                     />{" "}
-                                    Popular first
+                                    Popular artist first
                                 </label>
                                 <label class="flex items-center">
                                     <input
@@ -84,7 +69,7 @@ export const Offers = () => {
                     </div>
 
                     <div class="mb-4">
-                        <h2 class="text-lg font-semibold">Star Rating</h2>
+                        <h2 class="text-lg font-semibold">Artist Star Rating</h2>
                         <div>
                             <label class="flex items-center">
                                 <input
@@ -140,7 +125,7 @@ export const Offers = () => {
                     </div>
 
                     <div class="mb-4">
-                        <h2 class="text-lg font-semibold">genres</h2>
+                        <h2 class="text-lg font-semibold">Genres</h2>
                         <div>
                             <label class="flex items-center">
                                 <input type="checkbox" class="mr-2" value="pop" id="" onChange={handleCheckboxChange} />{" "}
@@ -176,10 +161,9 @@ export const Offers = () => {
 
                 <div class="flex-1 overflow-y-auto justify-center items-center bg-slate-600 mr-0">
                     <SongRequestCard
-                        imageSrc={hotelData.imageSrc}
-                        location={hotelData.location}
-                        starRating={hotelData.starRating}
-                        amenities={hotelData.amenities}
+                        imageSrc={formData.imageSrc}
+                        description={formData.description}
+                        genres={formData.genres}
                     />
                 </div>
             </div>
@@ -188,3 +172,5 @@ export const Offers = () => {
         </div>
     );
 };
+
+export default songRequestAdmin;

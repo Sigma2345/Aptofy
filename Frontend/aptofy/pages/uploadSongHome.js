@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "../components/Footer";
 
-export const RegisterPlace = () => {
+export const uploadSongHome = () => {
     return (
         <div class="flex flex-col min-h-screen">
             <div class="py-8 text-center">
@@ -18,7 +18,7 @@ export const RegisterPlace = () => {
                     <a href="uploadSong">
                         <img
                             class="rounded-t-lg"
-                            src="https://img.freepik.com/free-photo/hand-holding-small-house-with-tree-top_123827-24001.jpg"
+                            src="https://cdn1.matadornetwork.com/blogs/1/2014/04/Music-producer-man-in-recording-studio.jpg"
                             alt=""
                         />
                     </a>
@@ -173,3 +173,5 @@ export const RegisterPlace = () => {
         </div>
     );
 };
+
+export default uploadSongHome;

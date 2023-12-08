@@ -3,8 +3,8 @@ import Footer from "../components/Footer";
 import Button from "@mui/material/Button";
 import generateNFT from "../common/handleIPFS";
 //import uploadToChain from "../common/uploadToChain";
-import { AptosClient } from 'aptos'
-import { useWallet } from '@aptos-labs/wallet-adapter-react'
+import { AptosClient } from "aptos";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 
 export const songUpload = () => {
     const [fileList, setFiles] = useState([]);
@@ -12,8 +12,7 @@ export const songUpload = () => {
     const [description, setDescription] = useState("");
     const [genre, setGenre] = useState("");
 
-    const { signAndSubmitTransaction } = useWallet()
-    
+    const { signAndSubmitTransaction } = useWallet();
 
     const handleFileChange = (event) => {
         const selectedFiles = event.target.files;
@@ -35,18 +34,16 @@ export const songUpload = () => {
     };
 
     const uploadToChain = async (title, uri, description) => {
-        if (process.browser){
-                const response = await signAndSubmitTransaction(
-                {
-                    type: 'entry_function_payload',
-                    function: 6b813bbe7f84ab59540e810cca6ed884e9358c05d1b0c45b1ea5f4d3170ea219::songs::publish_song,
-                    type_arguments: [],
-                    arguments: [title, uri, description],
-                }
-            );
+        if (process.browser) {
+            const response = await signAndSubmitTransaction({
+                type: "entry_function_payload",
+                function: 6b813bbe7f84ab59540e810cca6ed884e9358c05d1b0c45b1ea5f4d3170ea219::songs::publish_song,
+                type_arguments: [],
+                arguments: [title, uri, description],
+            });
             return await AptosClient.waitForTransaction(response?.hash);
         }
-    }
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -134,7 +131,7 @@ export const songUpload = () => {
                                                 id="dropzone-file"
                                                 type="file"
                                                 className="hidden"
-                                                onChange={handleFileChange}                                                
+                                                onChange={handleFileChange}
                                                 accept="audio/*" // Add audio file acceptance
                                             />
                                         </div>
@@ -200,7 +197,7 @@ export const songUpload = () => {
                             </div>
                         </div>
                     </form>
-                    <Button variant="contained" sx={{m:'10px', backgroundColor: '#006983'}} onClick={handleSubmit}>
+                    <Button variant="contained" sx={{ m: "10px", backgroundColor: "#006983" }} onClick={handleSubmit}>
                         Submit
                     </Button>
                 </div>

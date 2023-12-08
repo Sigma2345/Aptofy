@@ -1,10 +1,9 @@
 import React from "react";
-import styles from "./home.module.css";
 
-export const NoPage = () => {
+export const noPage = () => {
     return (
-        <div class={`${styles.container} h-screen flex items-center justify-center`}>
-            <div class={`${styles.bgGray} h-screen flex flex-col items-center justify-center`}>
+        <div class={`h-screen flex items-center justify-center`}>
+            <div class={` h-screen flex flex-col items-center justify-center`}>
                 <div class="tracking-widest mt-4 text-center">
                     <span class="text-gray-500 text-6xl block">
                         <span>4 0 4</span>
@@ -20,3 +19,5 @@ export const NoPage = () => {
         </div>
     );
 };
+
+export default noPage;

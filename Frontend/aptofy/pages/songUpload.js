@@ -2,9 +2,8 @@ import { React, useState } from "react";
 import Footer from "../components/Footer";
 import Button from "@mui/material/Button";
 import generateNFT from "../common/handleIPFS";
-//import uploadToChain from "../common/uploadToChain";
-import { AptosClient } from "aptos";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { Provider, Network } from 'aptos'
+import { useWallet } from '@aptos-labs/wallet-adapter-react'
 
 export const songUpload = () => {
     const [fileList, setFiles] = useState([]);
@@ -12,7 +11,20 @@ export const songUpload = () => {
     const [description, setDescription] = useState("");
     const [genre, setGenre] = useState("");
 
-    const { signAndSubmitTransaction } = useWallet();
+    const client = new Provider(Network.TESTNET); 
+    const module_address = "0x5eb32074ff185f5e62bd2d8981615f85d26609a3f53756d7c1ab99e0beea714e";
+    const {
+        connect,
+        account,
+        network,
+        connected,
+        disconnect,
+        wallet,
+        wallets,
+        signAndSubmitTransaction,
+        signTransaction,
+        signMessage,
+    } = useWallet();
 
     const handleFileChange = (event) => {
         const selectedFiles = event.target.files;
@@ -23,6 +35,7 @@ export const songUpload = () => {
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
+        // console.log(account); 
     };
 
     const handleDescriptionChange = (event) => {
@@ -34,24 +47,36 @@ export const songUpload = () => {
     };
 
     const uploadToChain = async (title, uri, description) => {
-        if (process.browser) {
-            const response = await signAndSubmitTransaction({
-                type: "entry_function_payload",
-                function: 6b813bbe7f84ab59540e810cca6ed884e9358c05d1b0c45b1ea5f4d3170ea219::songs::publish_song,
+        // if (process.browser){
+        try
+        {
+            const payload = {
+                type: 'entry_function_payload',
+                function: `${module_address}::songs::publish_song`,
                 type_arguments: [],
                 arguments: [title, uri, description],
-            });
-            return await AptosClient.waitForTransaction(response?.hash);
+            };
+            const response = await signAndSubmitTransaction(payload);
+            console.log("NDHKS"); 
+            const ans = await client.waitForTransaction(response.hash);
+            return ans; 
+        } catch (err)
+        {
+            console.log(err); 
         }
-    };
+        // }
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = await generateNFT(fileList[0], title, genre, description);
         console.log(data);
+        console.log(title); 
+        console.log(description); 
         const ret = await uploadToChain(title, data, description);
         console.log(ret);
     };
+
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -59,7 +84,6 @@ export const songUpload = () => {
                 <div className="flex-1 bg-slate-200 overflow-auto p-6">
                     <h1 className="text-3xl">Upload Audio</h1>
                     <p>Audio recordings matter to users. Upload your audio files. You can add more later.</p>
-
                     <form className="mt-4">
                         <div className="mb-1">
                             <label htmlFor="title" className="block text-sm font-medium text-gray-700">

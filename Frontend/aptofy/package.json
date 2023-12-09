@@ -9,21 +9,27 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@aptos-labs/wallet-adapter-ant-design": "^2.0.0",
-    "@aptos-labs/wallet-adapter-react": "^2.1.0",
+    "@aptos-labs/wallet-adapter-ant-design": "0.1.0",
+    "@aptos-labs/wallet-adapter-react": "0.2.2",
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.20",
-    "aptos": "^1.20.0",
+    "aptos": "1.7.1",
     "mime": "^4.0.0",
     "next": "13.0.0",
     "nft.storage": "^7.1.1",
-    "petra-plugin-wallet-adapter": "^0.3.0",
+    "petra-plugin-wallet-adapter": "0.1.3",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
+
+  "resolutions": {
+    "@aptos-labs/wallet-adapter-react": "0.2.2",
+    "@aptos-labs/wallet-adapter-core": "0.1.7"
+  },
+
   "devDependencies": {
     "autoprefixer": "^10.4.16",
     "eslint": "8.54.0",

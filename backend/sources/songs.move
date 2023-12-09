@@ -2,16 +2,19 @@ module onchainradio::songs{
 
     use aptos_framework::account;
     use aptos_framework::timestamp;
-    use std::signer;
     use aptos_framework::event;
+    use aptos_framework::aptos_coin::{AptosCoin}; 
+    use aptos_framework::aptos_account::transfer_coins ; 
+    use std::signer;
     use std::string::String;
-    use aptos_std::table::{Self};
+
 
     // ERRORS
     const ERROR_USER_NOT_CREATOR :u64 = 1;
     const ERROR_ALREADY_CREATOR :u64 = 2; 
     const ERROR_NOT_ADMIN :u64 = 3; 
     const ERROR_USER_CANNOT_ADD_ADMIN :u64 = 4; 
+
 
     //events
     #[event]
@@ -36,7 +39,8 @@ module onchainradio::songs{
     }
 
     // constants
-    const LEAD_ADMIN: address = @0xdf4dc83f7f20cc63cf4bf3daad5111f981ab64ba76e500b9e801c64d4798b5e1 ; 
+    let LEAD_ADMIN: address = @0x0 ; 
+    const PERCENT_CUT: u64 = 5; 
 
     //structs
     struct Admin has key, store {
@@ -57,6 +61,10 @@ module onchainradio::songs{
         description: String, 
         published: bool, 
         timestamp: u64
+    }
+
+    fun init_module(account: &signer){
+        LEAD_ADMIN = signer::address_of(account); 
     }
 
     public entry fun add_admin(
@@ -122,6 +130,17 @@ module onchainradio::songs{
         )
     }
 
+    public entry fun tip_artist(
+        account: &signer, 
+        amount: u64, 
+        creator_address: address
+    ) {
+        let platformFee: u64 = (PERCENT_CUT * amount) / 100 ; 
+        let artistFee: u64 = amount - platformFee ; 
+        transfer_coins<AptosCoin>(account, LEAD_ADMIN, platformFee); 
+        transfer_coins<AptosCoin>(account, creator_address, artistFee); 
+    }
+
     #[view]
     public fun isAdmin(account: address): bool {
         exists<Admin>(account) 
@@ -131,6 +150,11 @@ module onchainradio::songs{
     public fun isCreator(account: address): bool {
         exists<Creator>(account)
     }
-    
+
+    #[view]
+    public fun getCreatorName(account: address): String acquires Creator {
+        borrow_global<Creator>(account).name
+    } 
+
 }
 

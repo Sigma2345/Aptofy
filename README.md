@@ -6,7 +6,7 @@
 ```bash
 git clone https://github.com/Sigma2345/Aptofy.git
 ```
-
+2. Ensure that <a href="https://aptos.dev/tools/aptos-cli/install-cli/">Aptos CLI</a> is installed on your system. 
 ### Deploying the backend
 ```bash
 cd Aptofy/backend

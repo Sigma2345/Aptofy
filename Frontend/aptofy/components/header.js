@@ -28,16 +28,12 @@ const navItems = [
         label: "Upload",
         url: "/songUpload",
     },
+    // {
+    //     label: "songRequestAdmin",
+    //     url: "/songRequestAdmin",
+    // },
     {
-        label: "songRequestAdmin",
-        url: "/songRequestAdmin",
-    },
-    {
-        label: "404",
-        url: "/noPage",
-    },
-    {
-        label: "UploadSongHome",
+        label: "Creator",
         url: "/uploadSongHome",
     },
 ];

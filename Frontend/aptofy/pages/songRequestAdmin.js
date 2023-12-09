@@ -7,7 +7,7 @@ export const songRequestAdmin = () => {
     const [formData, setFormData] = useState({
         imageSrc: "",
         description: "",
-        genres: {},
+        genres: [],
     });
 
     function filter() {

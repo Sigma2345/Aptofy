@@ -1,0 +1,3 @@
+const MODULE_ADDRESS = "0x5eb32074ff185f5e62bd2d8981615f85d26609a3f53756d7c1ab99e0beea714e"
+
+export default MODULE_ADDRESS; 

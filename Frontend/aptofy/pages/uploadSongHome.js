@@ -1,12 +1,32 @@
 import React from "react";
-
+import { Provider, Network } from "aptos"; 
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import MODULE_ADDRESS from "../common/constants";
 import Button from "@mui/material/Button";
 
 export const uploadSongHome = () => {
-    const creator = () => {
+
+    const client = new Provider(Network.TESTNET);
+    const {signAndSubmitTransaction} = useWallet();
+    const creator = async (event) => {
         //Logic for creating Creator
+        event.preventDefault();
+        const name = event.target.name.value;
+        await addCreator(name);
         router.push("/songUpload");
     }
+
+    const addCreator = async (name) => {
+        const payload = {
+            type: `entry_function_payload`, 
+            function: `${MODULE_ADDRESS}::songs::add_creator`,
+            type_arguments: [], 
+            arguments: [name]
+        }
+        const response = await signAndSubmitTransaction(payload);
+        return await client.waitForTransaction(response);
+    }
+
     return (
         <div class="flex flex-col min-h-screen">
             <div class="py-8 text-center">

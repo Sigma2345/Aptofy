@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import generateNFT from "../common/handleIPFS";
 import { Provider, Network } from 'aptos'
 import { useWallet } from '@aptos-labs/wallet-adapter-react'
+import MODULE_ADDRESS from "../common/constants";
 
 export const songUpload = () => {
     const [fileList, setFiles] = useState([]);
@@ -11,7 +12,6 @@ export const songUpload = () => {
     const [genre, setGenre] = useState("");
 
     const client = new Provider(Network.TESTNET); 
-    const module_address = "0x5eb32074ff185f5e62bd2d8981615f85d26609a3f53756d7c1ab99e0beea714e";
     const {
         connect,
         account,
@@ -46,24 +46,20 @@ export const songUpload = () => {
     };
 
     const uploadToChain = async (title, uri, description) => {
-        // if (process.browser){
-        try
-        {
+        try {
             const payload = {
                 type: 'entry_function_payload',
-                function: `${module_address}::songs::publish_song`,
+                function: `${MODULE_ADDRESS}::songs::publish_song`,
                 type_arguments: [],
                 arguments: [title, uri, description],
             };
             const response = await signAndSubmitTransaction(payload);
-            console.log("NDHKS"); 
+            console.log("uploaded"); 
             const ans = await client.waitForTransaction(response.hash);
             return ans; 
-        } catch (err)
-        {
+        } catch (err) {
             console.log(err); 
         }
-        // }
     }
 
     const handleSubmit = async (event) => {

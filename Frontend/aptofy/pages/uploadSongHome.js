@@ -2,23 +2,27 @@ import React from "react";
 import { Provider, Network } from "aptos"; 
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import MODULE_ADDRESS from "../common/constants";
-import Button from "@mui/material/Button";
-import { Input, TextFields } from "@mui/icons-material";
 import TextField from "@mui/material/TextField";
+import { useRouter } from 'next/navigation'
+
 
 export const uploadSongHome = () => {
-
+    const [name, setName] = React.useState("");
+    const router = useRouter();
     const client = new Provider(Network.TESTNET);
     const {signAndSubmitTransaction} = useWallet();
     const creator = async (event) => {
         //Logic for creating Creator
         event.preventDefault();
-        const name = event.target.name.value;
+        if (name.length < 3) {
+            alert("Name must be at least 3 characters long");
+            return;
+        }
         await addCreator(name);
         router.push("/songUpload");
     }
 
-    const addCreator = async (name) => {
+    const addCreator = async (name) => {        
         const payload = {
             type: `entry_function_payload`, 
             function: `${MODULE_ADDRESS}::songs::add_creator`,
@@ -57,8 +61,10 @@ export const uploadSongHome = () => {
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                             Vibes as beats enclosed to blast ears
                         </p>
-                        <TextField placeholder="Your Name" variant="outlined" inputProps={{style: {padding: 5, color: '#111111', fontWeight: 500}}} sx={{mr: 1, mb: 1, width: '60%', fontWeight: 20, color: '#111111'}}/>
-                        <div onClick={() => console.log("Hello")}                            
+                        <TextField placeholder="Your Name" variant="outlined" inputProps={{style: {padding: 5, color: '#111111', fontWeight: 500}}} sx={{mr: 1, mb: 1, width: '60%', fontWeight: 20, color: '#111111'}}
+                            value={name} onChange={(e) => setName(e.target.value)}
+                        />
+                        <div onClick={creator}                            
                             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         >
                             

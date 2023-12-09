@@ -168,7 +168,6 @@ export const songRequestAdmin = () => {
                 </div>
             </div>
 
-            <Footer />
         </div>
     );
 };

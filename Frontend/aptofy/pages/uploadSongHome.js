@@ -169,7 +169,6 @@ export const uploadSongHome = () => {
                 </section>
             </div>
 
-            <Footer />
         </div>
     );
 };

@@ -11,8 +11,8 @@ export const songUpload = () => {
     const [description, setDescription] = useState("");
     const [genre, setGenre] = useState("");
 
-    const client = new Provider(Network.DEVNET); 
-    const module_address = "0xf7a884b0bd05e9a19a2273bb4260b2d6e32fa54609724b3490ad90297caea51c";
+    const client = new Provider(Network.TESTNET); 
+    const module_address = "0x5eb32074ff185f5e62bd2d8981615f85d26609a3f53756d7c1ab99e0beea714e";
     const {
         connect,
         account,
@@ -52,9 +52,9 @@ export const songUpload = () => {
         {
             const payload = {
                 type: 'entry_function_payload',
-                function: `${module_address}::songs::add_creator`,
+                function: `${module_address}::songs::publish_song`,
                 type_arguments: [],
-                arguments: ["jxcnvkshvdf"],
+                arguments: [title, uri, description],
             };
             const response = await signAndSubmitTransaction(payload);
             console.log("NDHKS"); 

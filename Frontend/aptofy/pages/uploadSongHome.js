@@ -1,7 +1,12 @@
 import React from "react";
 import Footer from "../components/Footer";
+import Button from "@mui/material/Button";
 
 export const uploadSongHome = () => {
+    const creator = () => {
+        //Logic for creating Creator
+        router.push("/songUpload");
+    }
     return (
         <div class="flex flex-col min-h-screen">
             <div class="py-8 text-center">
@@ -15,41 +20,42 @@ export const uploadSongHome = () => {
 
             <div class="flex justify-center space-x-4">
                 <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-4">
-                    <a href="uploadSong">
+                    <div>
                         <img
                             class="rounded-t-lg"
                             src="https://cdn1.matadornetwork.com/blogs/1/2014/04/Music-producer-man-in-recording-studio.jpg"
                             alt=""
                         />
-                    </a>
+                    </div>
                     <div class="p-5">
-                        <a href="uploadSong">
+                        <div>
                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Song</h5>
-                        </a>
+                        </div>
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                             Vibes as beats enclosed to blast ears
                         </p>
-                        <a
-                            href="uploadSong"
+                        <div onClick={() => console.log("Hello")}                            
                             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         >
-                            List my Song
-                            <svg
-                                class="w-3.5 h-3.5 ml-2"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 14 10"
-                            >
-                                <path
-                                    stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M1 5h12m0 0L9 1m4 4L9 9"
-                                />
-                            </svg>
-                        </a>
+                            
+                                Be a Creator
+                                <svg
+                                    class="w-3.5 h-3.5 ml-2"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 14 10"
+                                >
+                                    <path
+                                        stroke="currentColor"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M1 5h12m0 0L9 1m4 4L9 9"
+                                    />
+                                </svg>
+                            
+                        </div>
                     </div>
                 </div>
             </div>

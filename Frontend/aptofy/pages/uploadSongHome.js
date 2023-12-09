@@ -1,6 +1,8 @@
 import React from "react";
 
 import Button from "@mui/material/Button";
+import { Input, TextFields } from "@mui/icons-material";
+import TextField from "@mui/material/TextField";
 
 export const uploadSongHome = () => {
     const creator = () => {
@@ -27,6 +29,7 @@ export const uploadSongHome = () => {
                             alt=""
                         />
                     </div>
+                    
                     <div class="p-5">
                         <div>
                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Song</h5>
@@ -34,6 +37,7 @@ export const uploadSongHome = () => {
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                             Vibes as beats enclosed to blast ears
                         </p>
+                        <TextField placeholder="Your Name" variant="outlined" inputProps={{style: {padding: 5, color: '#111111', fontWeight: 500}}} sx={{mr: 1, mb: 1, width: '60%', fontWeight: 20, color: '#111111'}}/>
                         <div onClick={() => console.log("Hello")}                            
                             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         >

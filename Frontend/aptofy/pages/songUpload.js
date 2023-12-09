@@ -237,7 +237,6 @@ export const songUpload = () => {
                 </div>
             </div>
 
-            <Footer />
         </div>
     );
 };

@@ -1,5 +1,4 @@
 import { React, useState } from "react";
-import Footer from "../components/Footer";
 import Button from "@mui/material/Button";
 import generateNFT from "../common/handleIPFS";
 import { Provider, Network } from 'aptos'

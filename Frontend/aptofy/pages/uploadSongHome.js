@@ -1,5 +1,5 @@
 import React from "react";
-import Footer from "../components/Footer";
+
 import Button from "@mui/material/Button";
 
 export const uploadSongHome = () => {

@@ -39,7 +39,7 @@ module onchainradio::songs{
     }
 
     // constants
-    const LEAD_ADMIN: address = @0xdf4dc83f7f20cc63cf4bf3daad5111f981ab64ba76e500b9e801c64d4798b5e1 ; 
+    let LEAD_ADMIN: address = @0x0 ; 
     const PERCENT_CUT: u64 = 5; 
 
     //structs
@@ -61,6 +61,10 @@ module onchainradio::songs{
         description: String, 
         published: bool, 
         timestamp: u64
+    }
+
+    fun init_module(account: &signer){
+        LEAD_ADMIN = signer::address_of(account); 
     }
 
     public entry fun add_admin(

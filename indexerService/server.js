@@ -6,7 +6,8 @@ async function main(){
     await SongEvents.SongEvents();
     await CreatorEvents.CreatorEvents();
     console.log("Sleeping")
-    await setTimeout(async ()=>{await main()}, parseInt(process.env.interval));    
+    setTimeout(async ()=>{await main()}, parseInt(process.env.interval));    
+    console.log("Waking up")
 }
 
 main();

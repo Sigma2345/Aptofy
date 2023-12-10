@@ -12,13 +12,17 @@ async function fetchCreatorName(creator_address, db) {
     }
 }
 
-async function fetchSongs() {
+async function fetchSongs(urlQuery) {
     try{
+        const query = {};
+        if(urlQuery.creator_address){
+            query.creator_address = urlQuery.creator_address;
+        }
         const client = new MongoClient(process.env.mongo_url);
         await client.connect();
         const db = client.db(process.env.db_name);
         const collection = db.collection('song');
-        const songs = await collection.find({}, {projection: {_id: 0}}).sort({ transaction_version: -1 }).toArray();
+        const songs = await collection.find(query, {projection: {_id: 0}}).sort({ transaction_version: -1 }).toArray();
         for(let i = 0; i < songs.length; i++){
             const creator_address = songs[i].creator_address;
             const creator_name = await fetchCreatorName(creator_address, db);
@@ -34,7 +38,7 @@ async function fetchSongs() {
 }
 
 export default async function handler(req, res) {
-    const songs = await fetchSongs();
+    const songs = await fetchSongs(req.query);
     if(songs){
         res.status(200).json(songs);
     }

@@ -9,6 +9,11 @@ import TextField from "@mui/material/TextField";
 export const songUpload = () => {
     const [fileList, setFiles] = useState([]);
     const [isFileUploaded, setIsFileUploaded] = useState(false);
+    const [isCoverUploaded, setIsCoverUploaded] = useState(false);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [genre, setGenre] = useState("");
+    const [coverList, setCover] = useState([]);
 
     const client = new Provider(Network.TESTNET);
     const {
@@ -32,13 +37,22 @@ export const songUpload = () => {
         setIsFileUploaded(!isFileUploaded);
     };
 
+    const handleCoverChange = (event) => {
+        const selectedFiles = event.target.files;
+        const fileList = Array.from(selectedFiles);
+        console.log(fileList);
+        setCover(fileList);
+        setIsCoverUploaded(!isCoverUploaded);
+    };
+
+
     const uploadToChain = async (title, uri, description) => {
         try {
             const payload = {
                 type: "entry_function_payload",
                 function: `${MODULE_ADDRESS}::songs::publish_song`,
                 type_arguments: [],
-                arguments: [title, uri, description],
+                arguments: [title, uri[0], uri[1], description],
             };
             const response = await signAndSubmitTransaction(payload);
             console.log("uploaded");
@@ -51,9 +65,17 @@ export const songUpload = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const title = event.target["title"].value;
-        const description = event.target["description"].value;
-        const data = await generateNFT(fileList[0], title, description);
+        console.log("Submit");
+        if (fileList.length === 0) {
+            alert("Please upload a song");
+            return;
+        }
+        if (coverList.length === 0) {
+            alert("Please upload a cover picture for the song");
+            return;
+        }
+        const data = await generateNFT(fileList[0], title, description, genre, coverList[0]);
+        console.log(data);
         const ret = await uploadToChain(title, data, description);
         console.log(ret);
     };
@@ -70,8 +92,20 @@ export const songUpload = () => {
                                 name="title"
                                 required
                                 className="w-full bg-white"
-                                id="outlined-required"
-                                label="Title"
+                                placeholder="Title *"
+                                inputProps={{ style: {borderRadius: 0.25 + 'rem', color: '#111111', fontWeight: 500, paddingTop: 5, paddingBottom: 5, paddingLeft: 7} }}
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="mb-3">
+                            <TextField
+                                name="genre"
+                                required
+                                className="w-full bg-white"
+                                placeholder="Genre *"
+                                inputProps={{ style: {borderRadius: 0.25 + 'rem', color: '#111111', fontWeight: 500, paddingTop: 5, paddingBottom: 5, paddingLeft: 7} }}
+                                onChange={(e) => setGenre(e.target.value)}
                             />
                         </div>
 
@@ -84,6 +118,7 @@ export const songUpload = () => {
                                 className="w-full bg-white"
                                 multiline
                                 rows={4}
+                                onChange={(e) => setDescription(e.target.value)}
                             />
                         </div>
                         <div className="flex justify-center rounded-lg">
@@ -133,11 +168,59 @@ export const songUpload = () => {
                                 />
                             </div>
                         </div>
+                        <div className="flex justify-center rounded-lg">
+                            <div className="flex-1 bg-slate-200 overflow:auto mt-10">
+                                <h1 className="text-3xl m-2">Upload Cover Picture</h1>
+
+                                <div
+                                    onClick={() => {
+                                        document.querySelector("#dropzone-file2").click();
+                                    }}
+                                    className="bg-white hover:bg-slate-50 cursor-pointer select-none transition-all rounded-lg shadow-md p-4"
+                                >
+                                    {!isCoverUploaded ? (
+                                        <span className="flex flex-col items-center justify-center pt-5 pb-6">
+                                            <p className="p-5 text-gray-500 dark:text-gray-400 text-lg font-semibold">
+                                                Click to upload or drag and drop picture files
+                                            </p>
+                                        </span>
+                                    ) : (
+                                        <label>
+                                            <span>File uploaded</span>
+                                        </label>
+                                    )}
+
+                                    {!isCoverUploaded ? (
+                                        <div className="p-2">
+                                            <ul>
+                                                <li className="flex items-center">Please upload a cover picture for the song</li>
+                                                <li className="flex items-center">
+                                                    Supported file formats are png, jpeg etc
+                                                </li>
+
+                                                <li className="flex items-center">Maximum image size is 10MB</li>
+                                            </ul>
+                                        </div>
+                                    ) : (
+                                        <span>{coverList[0].name}</span>
+                                    )}
+                                </div>
+                                <input
+                                    required
+                                    id="dropzone-file2"
+                                    type="file"
+                                    className="hidden"
+                                    onChange={handleCoverChange}
+                                    accept="image/*"
+                                />
+                            </div>
+                        </div>
                     </form>
                     <Button
                         variant="contained"
                         sx={{ mt: 5, backgroundColor: "#006983", padding: 2, paddingLeft: 5, paddingRight: 5 }}
                         type="submit"
+                        onClick={handleSubmit}
                     >
                         Submit
                     </Button>

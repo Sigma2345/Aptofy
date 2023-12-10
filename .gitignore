@@ -1,3 +1,4 @@
 node_modules
 .aptos
 indexerService/.env
+build

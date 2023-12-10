@@ -5,6 +5,7 @@ module onchainradio::songs{
     use aptos_framework::aptos_coin::{AptosCoin}; 
     use aptos_framework::aptos_account::transfer_coins ; 
     use std::signer;
+    use std::vector; 
     use std::string::String;
 
 
@@ -40,10 +41,11 @@ module onchainradio::songs{
         creator_address: address,
         name: String, 
         image_uri: String,
-        timestamp: u64
+        timestamp: u64, 
+        songs: vector<Song>
     }
 
-    struct Song has key, store, drop {
+    struct Song has store, drop {
         creator_address: address, 
         title: String, 
         uri: String, 
@@ -64,7 +66,8 @@ module onchainradio::songs{
             creator_address: _creator_address, 
             name: _name, 
             image_uri: copy _image_uri,
-            timestamp: timestamp::now_seconds()
+            timestamp: timestamp::now_seconds(), 
+            songs: vector::empty<Song>()
         }; 
         move_to(account, creator); 
         event::emit(CreatorAdded{
@@ -81,7 +84,7 @@ module onchainradio::songs{
         _uri: String, 
         _image_uri: String,
         _description: String
-    ) {
+    ) acquires Creator {
         assert!(exists<Creator>(signer::address_of(account)), ERROR_USER_NOT_CREATOR); 
         let song = Song { 
             creator_address: signer::address_of(account), 
@@ -91,7 +94,8 @@ module onchainradio::songs{
             image_uri: copy _image_uri,
             timestamp: timestamp::now_seconds() 
         };
-        move_to(account, song);
+        let creator_songs = &mut borrow_global_mut<Creator>(signer::address_of(account)).songs;
+        vector::push_back(creator_songs, song);
         event::emit(
             SongPublished{
                 creator_address: signer::address_of(account), 
@@ -100,7 +104,7 @@ module onchainradio::songs{
                 image_uri: _image_uri,
                 timestamp: timestamp::now_seconds()
             }
-        )
+        ); 
     }
 
     public entry fun tip_artist(

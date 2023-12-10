@@ -5,7 +5,32 @@ import vinyl from "../public/vinyl.png";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import { Titlecase } from "../common/utils";
-export default function MusicCard(props) {
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import {Network, Provider} from "aptos";
+import MODULE_ADDRESS from "../common/constants";
+
+export default function MusicCard({title ,artist_name ,uri ,artist_address }) {
+    const [amount, setAmount] = React.useState(0);
+    const { signAndSubmitTransaction } = useWallet();
+    const client = new Provider(Network.TESTNET); 
+    
+    // add $ button that allows to add number to field and when clicked processes transaction
+    const onDollarClick = async (event) => {
+        event.preventDefault();
+        await payUser(amount);
+    }
+
+    const payUser = async (amount) => {
+        const payload = {
+            type: `entry_function_payload`, 
+            function: `${MODULE_ADDRESS}::songs::tip_artist`, 
+            type_arguments: [],
+            arguments: [amount, artist_address],
+        }
+        const response = await signAndSubmitTransaction(payload);
+        return await client.waitForTransaction(response);
+    }
+
     return (
         <div
             style={{ width: "400px" }}
@@ -18,18 +43,18 @@ export default function MusicCard(props) {
                 <div className="w-1/2 flex flex-wrap">
                     <div className="w-full pt-3">
                         <Typography gutterBottom variant="h5" fontFamily={"monospace"} component="div">
-                            {Titlecase(props.title)}
+                            {Titlecase(title)}
                         </Typography>
                     </div>
                     <div className="pl-5 w-full">
                         <Typography fontFamily={"monospace"} variant="body2" color="text.secondary">
-                            {Titlecase(props.artist)}
+                            {Titlecase(artist_name)}
                         </Typography>
                     </div>
                 </div>
                 <div className="w-1/2 p-4 flex justify-end">
                     <div className="hover:bg-teal-300 bg-teal-200 hover:shadow transition-all rounded-full w-fit p-3 cursor-pointer">
-                        {props.isPlayed ? <PauseIcon /> : <PlayArrowIcon />}
+                        <PlayArrowIcon />
                     </div>
                 </div>
             </div>

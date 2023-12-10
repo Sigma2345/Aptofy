@@ -1,18 +1,13 @@
 import { React, useState } from "react";
-
 import SongRequestCard from "../components/songRequestCard";
 import axios from "axios";
 
-export const songRequestAdmin = () => {
+export const songRequestAdmin = async () => {
     const [formData, setFormData] = useState({
         imageSrc: "",
         description: "",
         genres: [],
     });
-
-    function filter() {
-        //add filter logic
-    }
 
     const handleRadioChange = (e) => {
         formData.filter = e.target.value;
@@ -35,6 +30,7 @@ export const songRequestAdmin = () => {
             }));
         }
     };
+
 
     return (
         <div class="flex flex-col min-h-screen">

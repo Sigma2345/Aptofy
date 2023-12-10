@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import MusicCard from "../components/card";
+import axios from "axios";
 
 export default function Home() {
     const [songList, setSongList] = useState([]);
 
     const fetchSongs = async () => {
-        setSongList([
-            {
-                title: "TITLE",
-                artist: "ARTIST",
-            },
-        ]);
+        const res = await axios.get("http://localhost:3000/api/fetchSongs") 
+        setSongList(res.data);
     };
     useEffect(() => {
         fetchSongs();
@@ -18,7 +15,7 @@ export default function Home() {
     return (
         <div>
             {songList.map((song) => (
-                <MusicCard key={song.title} title={song.title} artist={song.artist} />
+                <MusicCard key={song.timestamp} title={song.title} artist_name={song.creator_name} uri={song.uri} artist_address={song.creator_address} />
             ))}
         </div>
     );

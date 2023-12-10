@@ -1,6 +1,5 @@
 module onchainradio::songs{
 
-    use aptos_framework::account;
     use aptos_framework::timestamp;
     use aptos_framework::event;
     use aptos_framework::aptos_coin::{AptosCoin}; 
@@ -18,6 +17,7 @@ module onchainradio::songs{
     struct CreatorAdded has drop, store {
         creator_address: address, 
         name: String, 
+        image_uri: String, 
         timestamp: u64
     }
 
@@ -26,6 +26,7 @@ module onchainradio::songs{
         creator_address: address,
         title: String, 
         uri: String, 
+        image_uri: String,
         timestamp: u64
     }
 
@@ -38,7 +39,7 @@ module onchainradio::songs{
     struct Creator has key, store, drop {
         creator_address: address,
         name: String, 
-        approved: bool,
+        image_uri: String,
         timestamp: u64
     }
 
@@ -46,14 +47,15 @@ module onchainradio::songs{
         creator_address: address, 
         title: String, 
         uri: String, 
+        image_uri: String,
         description: String, 
-        published: bool, 
         timestamp: u64
     }
 
     public entry fun add_creator(
         account: &signer, 
         _name: String, 
+        _image_uri: String
 
     ) {
         let _creator_address = signer::address_of(account); 
@@ -61,13 +63,14 @@ module onchainradio::songs{
         let creator = Creator {
             creator_address: _creator_address, 
             name: _name, 
-            approved: true, 
+            image_uri: copy _image_uri,
             timestamp: timestamp::now_seconds()
         }; 
         move_to(account, creator); 
         event::emit(CreatorAdded{
             creator_address: _creator_address, 
             name: _name, 
+            image_uri: _image_uri,
             timestamp:timestamp::now_seconds()
         })
     }
@@ -76,6 +79,7 @@ module onchainradio::songs{
         account: &signer, 
         _title: String, 
         _uri: String, 
+        _image_uri: String,
         _description: String
     ) {
         assert!(exists<Creator>(signer::address_of(account)), ERROR_USER_NOT_CREATOR); 
@@ -84,7 +88,7 @@ module onchainradio::songs{
             title: copy _title, 
             uri: copy _uri, 
             description: copy _description, 
-            published: true, 
+            image_uri: copy _image_uri,
             timestamp: timestamp::now_seconds() 
         };
         move_to(account, song);
@@ -93,6 +97,7 @@ module onchainradio::songs{
                 creator_address: signer::address_of(account), 
                 title: _title, 
                 uri: _uri, 
+                image_uri: _image_uri,
                 timestamp: timestamp::now_seconds()
             }
         )

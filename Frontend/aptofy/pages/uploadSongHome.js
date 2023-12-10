@@ -61,7 +61,7 @@ export const uploadSongHome = () => {
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                             Vibes as beats enclosed to blast ears
                         </p>
-                        <TextField placeholder="Your Name" variant="outlined" inputProps={{style: {padding: 5, color: '#111111', fontWeight: 500}}} sx={{mr: 1, mb: 1, width: '60%', fontWeight: 20, color: '#111111'}}
+                        <TextField placeholder="Your Name" variant="outlined" inputProps={{style: {padding: 5, color: '#FFFFFF', fontWeight: 500}}} sx={{mr: 1, mb: 1, width: '60%', fontWeight: 20, color: '#111111'}}
                             value={name} onChange={(e) => setName(e.target.value)}
                         />
                         <div onClick={creator}                            

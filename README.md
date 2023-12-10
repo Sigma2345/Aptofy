@@ -24,8 +24,20 @@ aptos move publish --named-addresses onchainradio=deafult
 ```bash
 cd Frontend/aptofy
 ```
-2. Install all the packages using yarn and start an instance using yarn
+2. Change the module address to the account address obtained after publishing the module in constants.js. 
+3. Install all the packages using yarn and start an instance using yarn
 ```bash
 yarn 
 yarn dev
 ```
+### Setting up indexer service
+1. Install <a href="https://www.mongodb.com/docs/compass/current/install/">MongoDB Compass</a>
+2. Start Mongo Compass instance. 
+3. Make a .env file in indexerService and write the following contents in the file. 
+```.env
+mongo_url=<mongo-url-from-compass>
+module_address=<account-address-where-module-is-updated>
+db_name=<db-name-where-tx-are-stored>
+interval=10000
+```
+

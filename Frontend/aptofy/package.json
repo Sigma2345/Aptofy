@@ -18,18 +18,17 @@
     "@mui/material": "^5.14.20",
     "aptos": "1.7.1",
     "mime": "^4.0.0",
+    "mongodb": "^6.3.0",
     "next": "13.0.0",
     "nft.storage": "^7.1.1",
     "petra-plugin-wallet-adapter": "0.1.3",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
-
   "resolutions": {
     "@aptos-labs/wallet-adapter-react": "0.2.2",
     "@aptos-labs/wallet-adapter-core": "0.1.7"
   },
-
   "devDependencies": {
     "autoprefixer": "^10.4.16",
     "eslint": "8.54.0",

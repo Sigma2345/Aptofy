@@ -1,12 +1,29 @@
 const MongoClient = require('mongodb').MongoClient;
 
+async function fetchCreatorName(creator_address, db) {
+    try{
+        const collection = db.collection('creator');
+        const creator = await collection.findOne({"data.creator_address": creator_address}, {projection: {"data.name": 1}});
+        return creator.data.name;
+    }
+    catch(err){
+        console.log(err);
+        return null;
+    }
+}
+
 async function fetchSongs() {
     try{
         const client = new MongoClient(process.env.mongo_url);
         await client.connect();
         const db = client.db(process.env.db_name);
         const collection = db.collection('song');
-        const songs = await collection.find({}).sort({ transaction_version: -1 }).toArray();
+        const songs = await collection.find({}, {projection: {_id: 0}}).sort({ transaction_version: -1 }).toArray();
+        for(let i = 0; i < songs.length; i++){
+            const creator_address = songs[i].creator_address;
+            const creator_name = await fetchCreatorName(creator_address, db);
+            songs[i].creator_name = creator_name;
+        }
         client.close();
         return songs;
     }

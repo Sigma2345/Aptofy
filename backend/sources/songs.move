@@ -12,17 +12,8 @@ module onchainradio::songs{
     // ERRORS
     const ERROR_USER_NOT_CREATOR :u64 = 1;
     const ERROR_ALREADY_CREATOR :u64 = 2; 
-    const ERROR_NOT_ADMIN :u64 = 3; 
-    const ERROR_USER_CANNOT_ADD_ADMIN :u64 = 4; 
-
 
     //events
-    #[event]
-    struct AdminAdded has drop, store {
-        admin_address: address, 
-        timestamp: u64
-    }
-
     #[event]
     struct CreatorAdded has drop, store {
         creator_address: address, 
@@ -39,14 +30,11 @@ module onchainradio::songs{
     }
 
     // constants
-    let LEAD_ADMIN: address = @0x0 ; 
-    const PERCENT_CUT: u64 = 5; 
+    const ADMIN: address = @admin ;
+    const PLATFORM_FEE_PERCENT: u64 = 5; 
 
     //structs
-    struct Admin has key, store {
-        admin_address: address, 
-    }
-    
+
     struct Creator has key, store, drop {
         creator_address: address,
         name: String, 
@@ -61,26 +49,6 @@ module onchainradio::songs{
         description: String, 
         published: bool, 
         timestamp: u64
-    }
-
-    fun init_module(account: &signer){
-        LEAD_ADMIN = signer::address_of(account); 
-    }
-
-    public entry fun add_admin(
-        account: &signer, 
-        receiver: address
-    ) {
-        assert!(signer::address_of(account) == LEAD_ADMIN, ERROR_USER_CANNOT_ADD_ADMIN); 
-        let admin = Admin {
-            admin_address: signer::address_of(account) 
-        }; 
-        move_to(account, admin); 
-        aptos_framework::aptos_account::transfer_coins<Admin>(account, receiver, 1);
-        event::emit(AdminAdded{
-            admin_address: receiver, 
-            timestamp: timestamp::now_seconds()
-        });
     }
 
     public entry fun add_creator(
@@ -135,15 +103,10 @@ module onchainradio::songs{
         amount: u64, 
         creator_address: address
     ) {
-        let platformFee: u64 = (PERCENT_CUT * amount) / 100 ; 
+        let platformFee: u64 = (PLATFORM_FEE_PERCENT * amount) / 100 ; 
         let artistFee: u64 = amount - platformFee ; 
-        transfer_coins<AptosCoin>(account, LEAD_ADMIN, platformFee); 
+        transfer_coins<AptosCoin>(account, ADMIN, platformFee); 
         transfer_coins<AptosCoin>(account, creator_address, artistFee); 
-    }
-
-    #[view]
-    public fun isAdmin(account: address): bool {
-        exists<Admin>(account) 
     }
 
     #[view]

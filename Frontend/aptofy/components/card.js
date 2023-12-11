@@ -26,7 +26,16 @@ export default function MusicCard({
     // add $ button that allows to add number to field and when clicked processes transaction
     const onDollarClick = async (event) => {
         event.preventDefault();
-        await payUser(amount);
+        const amount = prompt("Enter amount to pay: ", "100");
+        if (amount == null || amount == "") {
+            return;
+        }
+        try {
+            const amount_numeric = JSON.parse(amount);
+            await payUser(amount_numeric);
+        } catch (err) {
+            console.log("invalid amount entered!");
+        }
     };
 
     const payUser = async (amount) => {

@@ -1,5 +1,6 @@
 <h1>APTOFY :radio:</h1>
 <p>An Audio Streaming </p>
+
 ## Contract Deployment and Local Setup
 
 1. Clone the repository

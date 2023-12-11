@@ -218,7 +218,7 @@ export const songUpload = () => {
                     </form>
                     <Button
                         variant="contained"
-                        sx={{ mt: 5, backgroundColor: "#006983", padding: 2, paddingLeft: 5, paddingRight: 5 }}
+                        sx={{ mt: 5, backgroundColor: "#65B741", padding: 2, paddingLeft: 5, paddingRight: 5 }}
                         type="submit"
                         onClick={handleSubmit}
                     >

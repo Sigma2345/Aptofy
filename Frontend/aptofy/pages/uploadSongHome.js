@@ -52,6 +52,10 @@ export const uploadSongHome = () => {
         router.push("/songUpload");
     };
 
+    const handleImageChange = async (event) => { 
+        event.preventDefault();
+    }; 
+    
     const addCreator = async (name) => {
         const payload = {
             type: `entry_function_payload`,
@@ -102,6 +106,14 @@ export const uploadSongHome = () => {
                             required
                             sx={{ width: "100%", mb: 2 }}
                             onChange={(e) => setName(e.target.value)}
+                        />
+                        <input
+                            required
+                            id="dropzone-file2"
+                            type="file"
+                            // className="hidden"
+                            onChange={handleImageChange}
+                            accept="image/*"
                         />
                         <div
                             onClick={creator}

@@ -7,7 +7,7 @@ import PauseIcon from "@mui/icons-material/Pause";
 import { Titlecase } from "../common/utils";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { Network, Provider } from "aptos";
-import MODULE_ADDRESS from "../common/constants";
+import {MODULE_ADDRESS} from "../common/constants";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export default function MusicCard({
@@ -31,7 +31,7 @@ export default function MusicCard({
             return;
         }
         try {
-            const amount_numeric = JSON.parse(amount);
+            const amount_numeric = JSON.parse(amount)*100000000;
             await payUser(amount_numeric);
         } catch (err) {
             console.log("invalid amount entered!");

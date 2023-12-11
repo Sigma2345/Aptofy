@@ -8,6 +8,7 @@ import { Titlecase } from "../common/utils";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { Network, Provider } from "aptos";
 import MODULE_ADDRESS from "../common/constants";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export default function MusicCard({
     title,
@@ -45,7 +46,12 @@ export default function MusicCard({
             className={`m-2 rounded border shadow transition-all cursor-pointer ${
                 isCurrentSong ? "bg-emerald-100 hover:bg-emerald-200" : "bg-teal-50 hover:bg-teal-100"
             }`}
-            onClick={onClickHandler}
+            onClick={(event) => {
+                if (event.target.getAttribute("id")?.toString().includes("payButton")) {
+                    return;
+                }
+                onClickHandler();
+            }}
         >
             <div className="w-full flex justify-center shadow bg-black bg-opacity-30 p-5 hover:bg-opacity-40 cursor-pointer transition-all rounded h-64 overflow-hidden items-center">
                 {cover_uri ? (
@@ -72,8 +78,16 @@ export default function MusicCard({
                         </Typography>
                     </div>
                 </div>
-                <div className="w-1/2 p-4 flex justify-end" onClick={onClickHandler}>
+                <div className="w-1/2 p-4 flex justify-end">
                     <div
+                        id="payButton"
+                        onClick={onDollarClick}
+                        className={`hover:shadow transition-all rounded-full w-fit p-3 cursor-pointer mr-2 bg-amber-400 hover:bg-amber-500`}
+                    >
+                        <AttachMoneyIcon id="payButton-child" />
+                    </div>
+                    <div
+                        onClick={onClickHandler}
                         className={`hover:shadow transition-all rounded-full w-fit p-3 cursor-pointer ${
                             isCurrentSong ? "bg-emerald-300 hover:bg-emerald-400" : "hover:bg-teal-300 bg-teal-200"
                         }`}

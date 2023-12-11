@@ -28,7 +28,8 @@ export default function Home() {
             });
     }, []);
     useEffect(() => {
-        document.querySelector("#MusicPlayer")?.play();
+        document.querySelector("#MusicPlayer")?.pause();
+        document.querySelector("#MusicPlayer")?.load();
         setIsCurrentSongPlaying(true);
     }, [currentSong]);
     return (
@@ -126,6 +127,7 @@ export default function Home() {
                                     setDuration(duration.length >= 2 ? duration : "0" + duration);
                                     const time = Math.floor(event.target.currentTime).toString();
                                     setCurrentTime(time.length >= 2 ? time : "0" + time);
+                                    event.target.play();
                                 }}
                                 onTimeUpdate={(event) => {
                                     const time = Math.floor(event.target.currentTime).toString();
@@ -137,7 +139,6 @@ export default function Home() {
                                 }}
                                 className="hidden"
                                 id="MusicPlayer"
-                                autoPlay
                             >
                                 <source src={currentSong.uri} type="audio/mp3" />
                             </video>

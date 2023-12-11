@@ -19,7 +19,7 @@ async function getSongEvents(trxn_address) {
         },
         data : data
     };
-    console.log(config);
+    //console.log(config);
     try{
         const response = await axios.post(config.url, config.data, {
             headers: {
@@ -40,6 +40,8 @@ async function processSongEvents(events){
     for (var i = 0; i < events.length; i++) {
         let data = events[i].data;
         let imghash = getIPFSHash(data.uri);
+        // console.log(data.uri);
+        // console.log(events[i].transaction_version);
         let metadata = await fetchIPFSData(imghash);
         const song = {
             transaction_version: events[i].transaction_version,
@@ -47,6 +49,7 @@ async function processSongEvents(events){
             creator_address: data.creator_address,
             genre: metadata.properties.genre,
             uri: `https://ipfs.io/ipfs/${getIPFSHash(metadata.image)}`,
+            cover_uri: `https://ipfs.io/ipfs/${getIPFSHash(data.image_uri)}`,
             description: metadata.description,
             timestamp: data.timestamp
         };
@@ -73,7 +76,7 @@ async function fetchIPFSData(hash){
 async function SongEvents(){
     try{
         let trxn_address = await getLatestTxnAddress();
-        console.log(trxn_address);
+        //console.log(trxn_address);
         let events = await getSongEvents(trxn_address);
         events = await processSongEvents(events);
         console.log(events);

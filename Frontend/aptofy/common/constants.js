@@ -1,4 +1,4 @@
-export const MODULE_ADDRESS = "0x764ba2d5b1aa23aa776c292a81c76ccdca46bf1d96f056761b52a9383f0083c3"
+export const MODULE_ADDRESS = "0x1d9f0b241245f6651afa08c50e28b9c456928f0f5fb622b56d1f7c85fd4216f5"
 export const FAQs = [
     {
         question: "How do I register?",

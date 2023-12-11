@@ -2,14 +2,13 @@ import React from "react";
 import { Provider, Network } from "aptos";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import { useRouter } from "next/router";
-import MODULE_ADDRESS from "../common/constants";
 import TextField from "@mui/material/TextField";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import uploadImage from "../common/uploadImage";
-import {FAQs} from "../common/constants";
+import {FAQs, MODULE_ADDRESS} from "../common/constants";
 
 
 export const UploadSongHome = () => {
@@ -28,8 +27,9 @@ export const UploadSongHome = () => {
             return;
         }
         await addCreator(name);
-        router?.push("/songUpload");
-        console.log(router);
+        //router?.push("/songUpload");
+        alert("You are now a creator!");
+        //console.log(router);
         setLoading(false);
     };
 
@@ -48,9 +48,9 @@ export const UploadSongHome = () => {
             alert("Please upload an image for your profile");
         }
         console.log("Uploading Image"); 
-            return;
         const url = await uploadImage(name, image);
         console.log(`Image Uploaded at ${url}`); 
+        console.log(MODULE_ADDRESS)
         const payload = {
             type: `entry_function_payload`,
             function: `${MODULE_ADDRESS}::songs::add_creator`,

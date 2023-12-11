@@ -15,7 +15,7 @@ const generateNFT = async (name, image) => {
 }
 
 const fetchGatewayURL = (ipfsURL) => {
-    return 'https://ipfs.io/ipfs/' + ipfsURL.split('ipfs://')[1];
+    return 'https://cloudflare-ipfs.com/ipfs/' + ipfsURL.split('ipfs://')[1];
 }
 
 const fetchImageURL = async (ipfsURL) => {

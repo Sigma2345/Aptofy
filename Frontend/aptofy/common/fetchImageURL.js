@@ -6,7 +6,7 @@ function fetchGatewayURL(ipfsURL) {
 
 async function fetchCoverImageURL(ipfsURL) {
     const gatewayURL = fetchGatewayURL(ipfsURL);
-    const response = await axios.get(`https://ipfs.io/ipfs/${gatewayURL}`);
+    const response = await axios.get(`https://cloudflare-ipfs.com/ipfs/${gatewayURL}`);
     return response.data.properties.cover;
 }
 

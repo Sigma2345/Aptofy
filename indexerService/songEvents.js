@@ -48,8 +48,8 @@ async function processSongEvents(events){
             title: data.title,
             creator_address: data.creator_address,
             genre: metadata.properties.genre,
-            uri: `https://ipfs.io/ipfs/${getIPFSHash(metadata.image)}`,
-            cover_uri: `https://ipfs.io/ipfs/${getIPFSHash(data.image_uri)}`,
+            uri: `https://cloudflare-ipfs.com/ipfs/${getIPFSHash(metadata.image)}`,
+            cover_uri: `https://cloudflare-ipfs.com/ipfs/${getIPFSHash(data.image_uri)}`,
             description: metadata.description,
             timestamp: data.timestamp
         };
@@ -65,7 +65,7 @@ function getIPFSHash(data){
 
 async function fetchIPFSData(hash){
     try{
-        let response = await axios.get(`https://ipfs.io/ipfs/${hash}`);
+        let response = await axios.get(`https://cloudflare-ipfs.com/ipfs/${hash}`);
         return response.data;
     }
     catch(error){

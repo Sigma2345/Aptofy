@@ -1,76 +1,56 @@
 import React from "react";
 import { Provider, Network } from "aptos";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { useRouter } from "next/router";
 import MODULE_ADDRESS from "../common/constants";
 import TextField from "@mui/material/TextField";
-import { useRouter } from "next/navigation";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import uploadImage from "../common/uploadImage";
+import {FAQs} from "../common/constants";
 
-const FAQs = [
-    {
-        question: "How do I register?",
-        answer: "Make an account on Aptos wallet and simply login.",
-    },
-    {
-        question: "Are there any hidden charges?",
-        answer: "There are no hidden charges. The song registration is entirely free of cost.",
-    },
-    {
-        question: "Who will accept my upload request?",
-        answer: "The system will check and respond the request.",
-    },
-    {
-        question: "How much time is taken to respond?",
-        answer: "It generally happens in hours but can take 1-2 days too.",
-    },
-    {
-        question: "Any fraud checks?",
-        answer: "The system checks and filter frauds and duplicates",
-    },
-    {
-        question: "More",
-        answer: "Yes",
-    },
-];
 
-export const uploadSongHome = () => {
+export const UploadSongHome = () => {
     const [name, setName] = React.useState("");
     const router = useRouter();
     const client = new Provider(Network.TESTNET);
     const { signAndSubmitTransaction } = useWallet();
+    const [loading, setLoading] = React.useState(false);
     const isCreator = true;
-    const [image, setImage] = React.useState(undefined);
+    const [image, setImage] = React.useState(null);
     const creator = async (event) => {
         event.preventDefault();
+        setLoading(true);
         if (name.length < 3) {
             alert("Name must be at least 3 characters long");
             return;
         }
         await addCreator(name);
-        router.push("/songUpload");
+        router?.push("/songUpload");
+        console.log(router);
+        setLoading(false);
     };
 
-    const handleImageChange = async (event) => { 
+    const handleImageChange = async (event) => {
         event.preventDefault();
         const file = event.target.files[0];
         setImage(file);
-        console.log(file);
-    }; 
-    
+    };
+
     const addCreator = async (name) => {
         if (name.length < 3) {
             alert("Name must be at least 3 characters long");
             return;
         }
-        if (image === undefined) {
+        if (!image) {
             alert("Please upload an image for your profile");
-            return;
         }
+        console.log("Uploading Image"); 
+            return;
         const url = await uploadImage(name, image);
+        console.log(`Image Uploaded at ${url}`); 
         const payload = {
             type: `entry_function_payload`,
             function: `${MODULE_ADDRESS}::songs::add_creator`,
@@ -89,7 +69,7 @@ export const uploadSongHome = () => {
                         Upload your content
                     </h1>
                     <p className="text-lg text-gray-600">
-                        Get the views you’ve been missing by listing for free, today!
+                        Get the views you've been missing by listing for free, today!
                     </p>
                 </div>
             </div>
@@ -125,23 +105,36 @@ export const uploadSongHome = () => {
                             required
                             id="dropzone-file3"
                             type="file"
-                            // className="hidden"
+                            className="hidden"
                             onChange={handleImageChange}
-                            accept="image/*"                            
-                            style={{marginBottom: 5}}
+                            accept="image/*"
+                            style={{ marginBottom: 5 }}
                             hidden
                         />
                         <div
-                            onClick={()=>{
-                                document.querySelector('#dropzone-file3').click();
+                            onClick={() => {
+                                !loading && document.querySelector("#dropzone-file3").click();
                             }}
-                            className="p-4 pl-8 cursor-pointer pr-8 mr-4 mb-3 inline-flex items-center text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        > Upload Your Picture </div>
-                        <div
-                            onClick={creator}
-                            className="p-4 pl-8 cursor-pointer pr-8 inline-flex items-center text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            className={`p-4 mr-4 inline-flex items-center text-sm font-medium text-center text-white rounded-lg ${
+                                !loading
+                                    ? !image
+                                        ? "bg-blue-700 hover:bg-blue-800 cursor-pointer"
+                                        : "bg-green-500 cursor-pointer"
+                                    : "bg-gray-500 cursor-not-allowed"
+                            }`}
                         >
-                            Be a Creator
+                            {" "}
+                            Upload Your Picture{" "}
+                        </div>
+                        <div
+                            onClick={(event) => image && !loading && name.length >= 3 && creator(event)}
+                            className={`p-4 pl-8 pr-8 inline-flex items-center text-sm font-medium text-center text-white rounded-lg ${
+                                image && !loading && name.length >= 3
+                                    ? "bg-blue-700 hover:bg-blue-800 cursor-pointer"
+                                    : "bg-gray-500 cursor-not-allowed"
+                            }`}
+                        >
+                            {loading ? "Please Wait" : "Be a Creator"}
                             <svg
                                 className="w-3.5 h-3.5 ml-2"
                                 aria-hidden="true"
@@ -248,4 +241,4 @@ export const uploadSongHome = () => {
     );
 };
 
-export default uploadSongHome;
+export default UploadSongHome;

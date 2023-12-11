@@ -62,10 +62,10 @@ export default function MusicCard({
                 onClickHandler();
             }}
         >
-            <div className="w-full flex justify-center shadow bg-black bg-opacity-30 p-5 hover:bg-opacity-40 cursor-pointer transition-all rounded h-64 overflow-hidden items-center">
+            <div className="w-full flex justify-center shadow bg-black bg-opacity-30 p-5 hover:bg-opacity-40 cursor-pointer transition-all rounded h-52 overflow-hidden items-center">
                 {cover_uri ? (
                     <img
-                        className="rounded-xl h-32 hover:h-64 transition-all"
+                        className="rounded-xl h-48 hover:h-64 hover:animate-pulse transition-all"
                         src={cover_uri}
                         alt="cover"
                         width={"auto"}

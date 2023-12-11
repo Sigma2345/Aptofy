@@ -34,8 +34,13 @@ The user can also use the presently deployed contract deployed at module address
 ```bash
 cd Frontend/aptofy
 ```
-2. Change the module address to the account address obtained after publishing the module in constants.js. 
-3. Install all the packages using yarn and start the frontend using yarn
+2. Change the module address to the account address obtained after publishing the module in constants.js.
+3. Create a .env.local file in Frontend/aptofy directory and enter the following information. 
+```.env
+mongo_url=<mongodb-connection-string>
+db_name=<db-name-where-events-are-stored>
+```  
+4. Install all the packages using yarn and start the frontend using yarn
 ```bash
 yarn 
 yarn dev
@@ -45,13 +50,10 @@ yarn dev
 2. Create a databse and get an API key to access the database. 
 3. Make a .env file in indexerService and write the following contents in the file. 
 ```.env
-mongo_url=<mongodb-api-key>
+mongo_url=<mongodb-connection-string>
 module_address=<account-address-where-module-is-updated>
 db_name=<db-name-where-events-are-stored>
-interval=10000
+interval=<time-in-milliseconds-after-which-events-sync>
+base_transaction_version_song=<transaction-version-after-which-events-must-be-fetched>
+base_transaction_version_creator=<transaction-version-after-which-events-must-be-fetched>
 ```
-4. Create a .env.local file in Frontend/aptofy directory and enter the following information. 
-```.env
-mongo_url=<mongodb-api-key>
-db_name=<db-name-where-events-are-stored>
-``` 

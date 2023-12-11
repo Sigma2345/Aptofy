@@ -9,33 +9,8 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import uploadImage from "../common/uploadImage";
+import {FAQs} from "../common/constants";
 
-const FAQs = [
-    {
-        question: "How do I register?",
-        answer: "Make an account on Aptos wallet and simply login.",
-    },
-    {
-        question: "Are there any hidden charges?",
-        answer: "There are no hidden charges. The song registration is entirely free of cost.",
-    },
-    {
-        question: "Who will accept my upload request?",
-        answer: "The system will check and respond the request.",
-    },
-    {
-        question: "How much time is taken to respond?",
-        answer: "It generally happens in hours but can take 1-2 days too.",
-    },
-    {
-        question: "Any fraud checks?",
-        answer: "The system checks and filter frauds and duplicates",
-    },
-    {
-        question: "More",
-        answer: "Yes",
-    },
-];
 
 export const UploadSongHome = () => {
     const [name, setName] = React.useState("");
@@ -71,9 +46,11 @@ export const UploadSongHome = () => {
         }
         if (!image) {
             alert("Please upload an image for your profile");
-            return;
         }
+        console.log("Uploading Image"); 
+            return;
         const url = await uploadImage(name, image);
+        console.log(`Image Uploaded at ${url}`); 
         const payload = {
             type: `entry_function_payload`,
             function: `${MODULE_ADDRESS}::songs::add_creator`,

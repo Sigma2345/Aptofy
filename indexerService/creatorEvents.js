@@ -19,7 +19,7 @@ async function getCreatorEvents(trxn_address) {
         },
         data : data
     };
-    console.log(config);
+    //console.log(config);
     try{
         const response = await axios.post(config.url, config.data, {
             headers: {
@@ -38,7 +38,7 @@ async function getCreatorEvents(trxn_address) {
 async function CreatorEvents(){
     try{
         let trxn_address = await getLatestTxnAddress();
-        console.log(trxn_address);
+        //console.log(trxn_address);
         let events = await getCreatorEvents(trxn_address);
         console.log(events);
         if(events.length > 0){

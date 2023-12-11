@@ -11,7 +11,7 @@ async function getLatestTxnAddress(){
         const cursor = collection.find({}, { projection: { transaction_version: 1 } }).sort({ transaction_version: -1 }).limit(1);
         const result = await cursor.toArray();
         if (result.length === 0) {
-            return 0;
+            return process.env.base_transaction_version_creator;
         }
         return result[0].transaction_version;
     } catch (error) {

@@ -2,7 +2,7 @@ import { NFTStorage } from 'nft.storage'
 import { fetchCoverImageURL } from './fetchImageURL';
 
 //Temporary KEY, to be deleted befior publishing/submission
-const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDQ2NzBBNkU0ZjY0YjVjMDUwMjc4NzM3OUUxMjZkMTk1ODM4RUUzMTAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTcwMjMwMDYxNTUzNCwibmFtZSI6InRlc3RrZXkyIn0.MiTGmPF0zAf59LY1wo__PL7_svYunS_XbNyZFuD4i4w';
+const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDYzRGY3MWU2NTNmMzBCMDU2Y2FkNDUzMGZhNWE0OTk1ZGU4ODY5NUYiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTcwMjMwOTQ4MDAyNiwibmFtZSI6ImludGVyaWl0In0.JTvcpmVlB8Dc3sRSwDPO2BvkS25CDXs5YdxfcgMTul4';
 
 const generateNFT = async (file, name, genre, description, cover) => {
     const client = new NFTStorage({ token: API_KEY });

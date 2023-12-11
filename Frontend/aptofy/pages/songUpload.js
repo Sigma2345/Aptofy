@@ -86,7 +86,7 @@ export const songUpload = () => {
                 <div className="flex-1 bg-slate-200 overflow-auto rounded p-10">
                     <h1 className="text-3xl">Upload Song</h1>
                     <div className="text-lg p-3">Audio recordings matter to users</div>
-                    <form className="mt-4" onSubmit={handleSubmit}>
+                    <form className="mt-4">
                         <div className="mb-3">
                             <TextField
                                 name="title"
@@ -219,7 +219,6 @@ export const songUpload = () => {
                     <Button
                         variant="contained"
                         sx={{ mt: 5, backgroundColor: "#65B741", padding: 2, paddingLeft: 5, paddingRight: 5 }}
-                        type="submit"
                         onClick={handleSubmit}
                     >
                         Submit

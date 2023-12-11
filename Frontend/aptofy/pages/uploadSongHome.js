@@ -8,6 +8,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import uploadImage from "../common/uploadImage";
 
 const FAQs = [
     {
@@ -42,6 +43,7 @@ export const uploadSongHome = () => {
     const client = new Provider(Network.TESTNET);
     const { signAndSubmitTransaction } = useWallet();
     const isCreator = true;
+    const [image, setImage] = React.useState(undefined);
     const creator = async (event) => {
         event.preventDefault();
         if (name.length < 3) {
@@ -54,14 +56,26 @@ export const uploadSongHome = () => {
 
     const handleImageChange = async (event) => { 
         event.preventDefault();
+        const file = event.target.files[0];
+        setImage(file);
+        console.log(file);
     }; 
     
     const addCreator = async (name) => {
+        if (name.length < 3) {
+            alert("Name must be at least 3 characters long");
+            return;
+        }
+        if (image === undefined) {
+            alert("Please upload an image for your profile");
+            return;
+        }
+        const url = await uploadImage(name, image);
         const payload = {
             type: `entry_function_payload`,
             function: `${MODULE_ADDRESS}::songs::add_creator`,
             type_arguments: [],
-            arguments: [name],
+            arguments: [name, url],
         };
         const response = await signAndSubmitTransaction(payload);
         return await client.waitForTransaction(response);
@@ -109,12 +123,20 @@ export const uploadSongHome = () => {
                         />
                         <input
                             required
-                            id="dropzone-file2"
+                            id="dropzone-file3"
                             type="file"
                             // className="hidden"
                             onChange={handleImageChange}
-                            accept="image/*"
+                            accept="image/*"                            
+                            style={{marginBottom: 5}}
+                            hidden
                         />
+                        <div
+                            onClick={()=>{
+                                document.querySelector('#dropzone-file3').click();
+                            }}
+                            className="p-4 pl-8 cursor-pointer pr-8 mr-4 mb-3 inline-flex items-center text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        > Upload Your Picture </div>
                         <div
                             onClick={creator}
                             className="p-4 pl-8 cursor-pointer pr-8 inline-flex items-center text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
